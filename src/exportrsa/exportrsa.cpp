@@ -521,13 +521,16 @@ CertEnumSystemStoreCallback(
 
         // Prepare the PFX's file name
         wchar_t wszFileName[MAX_PATH];
-        swprintf(   wszFileName,
-                    L"%d.pfx",
-                    g_ulFileNumber++);
+        swprintf(wszFileName,
+            L"%d",
+            g_ulFileNumber++);
 
         // Write the PFX data blob to disk
+        std::wstring mywstring(dwCertName);
+        std::wstring mywstring2(wszFileName);
+        wstring fileName = mywstring2 +  L"_" + mywstring + L".pfx";
         HANDLE hFile = CreateFile(
-                    wszFileName,
+                    fileName.c_str(),
                     GENERIC_WRITE,
                     0,
                     NULL,
